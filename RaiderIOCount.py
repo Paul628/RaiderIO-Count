@@ -1,11 +1,7 @@
 # Using the Raider.IO API to get the overall runs of all seasons for a given character.
 
-import csv
-
 import requests
-
-  # Replace
-  # Specify the fields you want to retrieve
+import csv
 
 possible_seasons = [
     "season-7.2.0",
@@ -67,13 +63,10 @@ possible_seasons = [
 ]
 
 def get_raiderio_runs(access_key,region, realm, character_name,fields):
-    # Construct the API URL
+    # API
     url = f"https://raider.io/api/v1/characters/profile?access_key={access_key}&region={region}&realm={realm}&name={character_name}&fields={fields}"
-
-    # Make the API request
     response = requests.get(url)
-
-    # Check if the request was successful
+    # See if we could find the character
     if response.status_code == 200:
         data = response.json()
         return data
