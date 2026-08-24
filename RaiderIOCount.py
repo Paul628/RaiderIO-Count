@@ -2,6 +2,10 @@
 
 import requests
 import csv
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 possible_seasons = [
     "season-7.2.0",
@@ -74,9 +78,10 @@ def get_raiderio_runs(access_key,region, realm, character_name,fields):
         print(f"Error: Unable to fetch data for {character_name} on {realm} ({region}). Status code: {response.status_code}")
         return None
 
-access_key = "RIOLBK1DYY4znscgmuHTzAKxA"
-region = input("Enter the region (e.g., us, eu): ")
-realm = input("Enter the realm (e.g., stormrage): ")
+access_key = os.environ.get("API_KEY")
+#print(access_key)
+region = input("Enter the region (e.g. us, eu): ")
+realm = input("Enter the realm (e.g. blackhand): ")
 character_name = input("Enter the character name: ")
 
 total_runs = 0
@@ -102,7 +107,7 @@ for season in possible_seasons:
 
         print(f"Season {season} -> Runs in season: {runs_in_season} / Total runs: {total_runs}")
 
-csv_filename = "raiderio_runs.csv"
+csv_filename = f"{character_name}-{realm}_raiderio_runs.csv"
 with open(csv_filename, "w", newline="", encoding="utf-8-sig") as csv_file:
     writer = csv.DictWriter(
         csv_file,
